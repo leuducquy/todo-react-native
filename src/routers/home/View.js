@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {Component} from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,15 +12,23 @@ import gql from 'graphql-tag';
 import { FormLabel, FormInput, Button, FormValidationMessage } from 'react-native-elements'
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 
-const sigupMutation = 
-gql`mutation ($email: String!, $password: String!) {
-  signUp(email: $email, password: $password) {
+class Home extends Component {
+  render() {
+    return (
+    <Text>Hello react native</Text>
+    );
+  }
+}
+
+const createTodoMutation = 
+gql`mutation ($text: String!, $complete: Boolean) {
+  createTodo(text: $text, complete: $complete) {
     id
   }
 }`;
-const signGraphql = graphql(sigupMutation, {
+const createTodoGraphql = graphql(createTodoMutation, {
   props: ({ ownProps, mutate }) => ({
-    signUp(email, password) {
+    createTodo(text, complete) {
       return mutate({
         variables: {
           email,
@@ -33,6 +41,4 @@ const signGraphql = graphql(sigupMutation, {
     },
   }),
 });
-export default reduxForm({
-  form: 'signup',
-})(signGraphql(signup));
+export default createTodoGraphql(Home);
