@@ -31,8 +31,8 @@ const createTodoGraphql = graphql(createTodoMutation, {
     createTodo(text, complete) {
       return mutate({
         variables: {
-          email,
-          password,
+          text,
+          complete,
         },
       })
       .then(({ data }) => {
