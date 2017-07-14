@@ -2,16 +2,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { Observable } from 'rxjs/Observable';
 import { combineEpics } from 'redux-observable';
 import { startSubmit, stopSubmit } from 'redux-form';
-
-import axios from 'axios';
-import feathers from 'feathers-client';
-import rest from 'feathers-rest/client';
-
 import { AsyncStorage } from 'react-native';
-
-
-
-
 async function saveToken(token) {
   try {
     await AsyncStorage.setItem('@rntodo:token', token);
@@ -24,7 +15,7 @@ async function saveToken(token) {
 const saveTokenEpic = action$ =>
   action$.ofType('LOGIN_SUCCEEDED')
     .mergeMap(action =>
-      fromPromise(saveToken(action.response.token))
+      fromPromise(saveToken(action.data.data.login.token))
         .map(x => ({
           type: 'SET_ITEM_SUCCEEDED',
         }))

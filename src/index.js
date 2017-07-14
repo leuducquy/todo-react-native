@@ -10,12 +10,12 @@ import 'rxjs';
 import { client } from './reducers/index';
 import { ApolloProvider } from 'react-apollo';
 import store from './store';
-import Router from './routes';
+import Router from './routers';
 
 export default class AppContainer extends React.Component {
   render() {
     return (
-      <ApolloProvider client={client}>
+      <ApolloProvider client={client} store={store}>
       <View style={{ flex: 1 }}>
         <StatusBar />
        <Router />
