@@ -5,27 +5,22 @@ import {
   View,
   StatusBar,
 } from 'react-native';
-// import { Provider } from 'react-redux';
-// import 'rxjs';
-
-// import store from './store';
-// import Router from './routes';
+import { Button } from "react-native-elements";
+import 'rxjs';
+import { client } from './reducers/index';
+import { ApolloProvider } from 'react-apollo';
+import store from './store';
+import Router from './routes';
 
 export default class AppContainer extends React.Component {
   render() {
     return (
-      //   <Provider store={store}>
+      <ApolloProvider client={client}>
       <View style={{ flex: 1 }}>
         <StatusBar />
-        <Button
-          raised
-          icon={{ name: 'home', size: 32 }}
-          buttonStyle={{ backgroundColor: 'red', borderRadius: 10 }}
-          textStyle={{ textAlign: 'center' }}
-          title={`Welcome to\nReact Native Elements`}
-        />
+       <Router />
       </View>
-      //   </Provider>
+      </ApolloProvider>
     );
   }
 }
