@@ -15,11 +15,11 @@ import gql from 'graphql-tag';
 export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
-    //this.props.getTokenFromStorage();
+    // const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNTAwNDU5NTAzLCJleHAiOjE1MDA1NDU5MDMsImlzcyI6ImZlYXRoZXJzIn0.VufY9v-FSW04VKj-ewyEc8GZfkNyPqSRNqgxIDQ9W9g";
     // client.subscribeToMore({
     //   document: gql`
     //     subscription {
-    //     viewer(token : ""){
+    //     viewer(token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNTAwNDU5NTAzLCJleHAiOjE1MDA1NDU5MDMsImlzcyI6ImZlYXRoZXJzIn0.VufY9v-FSW04VKj-ewyEc8GZfkNyPqSRNqgxIDQ9W9g"){
     //         todos {
     //           text,
     //           complete
@@ -28,6 +28,8 @@ export default class AppContainer extends React.Component {
     //   }`,
     //   variables: {},
     //   updateQuery: (prev, { subscriptionData }) => {
+    //     console.log(prev);
+    //         console.log(subscriptionData);
     //     // Modify your store and return new state with the new arrived data
     //   }
     // });

@@ -11,6 +11,13 @@ import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transpo
 const wsClient = new SubscriptionClient('ws://localhost:5000/subscriptions', { reconnect: true, });
 
 const networkInterface = createNetworkInterface({ uri: 'http://localhost:3030/graphql' });
+// const wsClient = new SubscriptionClient(`ws://localhost:5000/`, {
+//     reconnect: true,
+//     connectionParams: {
+//         // Pass any arguments you want for initialization
+//     }
+// });
+// const networkInterface = createNetworkInterface({ uri: 'http://localhost:3000/graphql' });
 
 networkInterface.use([{
   applyMiddleware(req, next) {
