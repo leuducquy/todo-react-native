@@ -79,7 +79,7 @@ const loginGraphql = graphql(loginMutation, {
           ownProps.loginSucceeded(data.data.login.token);
            ownProps.addTokenToProps(data.data.login.token);
       }).catch(err =>{
-         ownProps.loginFailed(data);
+         ownProps.loginFailed(err);
       });
     },
   }),

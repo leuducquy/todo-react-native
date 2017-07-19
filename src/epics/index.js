@@ -12,13 +12,19 @@ async function saveToken(token) {
     console.log(error);
   }
 }
-async function getToken() {
-  try {
-    await AsyncStorage.getItem('@rntodo:token');
+
+export async function getToken() {
+ try {
+    const value = await AsyncStorage.getItem('@rntodo:token');
+    if (value !== null){
+      return value;
+    } else {
+      return '';
+    }
   } catch (error) {
-    console.log('Error setting item for AsyncStorage');
     console.log(error);
-  }
+    return '';
+  } 
 }
 
 const saveTokenEpic = action$ =>
@@ -29,19 +35,22 @@ const saveTokenEpic = action$ =>
           type: 'SET_ITEM_SUCCEEDED',
         }))
     );
-const checkIfSignedIn = (action$) =>
+const checkIfSignedIn = action$ =>
   action$.ofType('CHECK_IF_SIGNED_IN')
     .mergeMap(action =>
-      fromPromise(getToken()))
-    .map(token => {
-      if (token === '') {
-        Actions.login;
-        return {type :'NOT_SIGNED_IN'};
-      }else{
-        return {type :'ADD_TOKEN_TO_PROPS',
-        token};
-      }
-    })
+      fromPromise(getToken())
+        .map(token => {
+          if (token === '' || token === undefined) {
+            Actions.login({});
+            return { type: 'NOT_SIGNED_IN' };
+          } else {
+            return { 
+              type: 'ADD_TOKEN_TO_PROPS',
+              token
+            };
+          }
+        })
+    );
 export default combineEpics(
   saveTokenEpic,
   checkIfSignedIn

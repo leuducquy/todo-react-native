@@ -36,7 +36,7 @@ const submit = ({  text='' }, createTodo) => {
    createTodo(text ,false);
   }
 }
-const Home  = ({handleSubmit , createTodo,checkIfSignedIn}) => {
+const TodoForm  = ({handleSubmit , createTodo}) => {
   return (
       <View>
       <FormLabel>Todo</FormLabel>
@@ -73,5 +73,5 @@ const todoGraphql = graphql(createTodoMutation, {
   }),
 });
 export default reduxForm({
-  form: 'home',
-})(todoGraphql(Home));
+  form: 'todoForm',
+})(todoGraphql(TodoForm));

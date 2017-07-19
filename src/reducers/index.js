@@ -8,26 +8,9 @@ import token from "./token";
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws';
 
 
+const wsClient = new SubscriptionClient('ws://localhost:5000/subscriptions', { reconnect: true, });
 
-async function getToken() {
-  try {
-  const value = await AsyncStorage.getItem('@rntodo:token');
-  if (value !== null){
-    // We have data!!
-    console.log(value);
-    return value;
-  }
-} catch (error) {
-  return "";
-}
-}
-const wsClient = new SubscriptionClient(`ws://localhost:5000/`, {
-    reconnect: true,
-    connectionParams: {
-        // Pass any arguments you want for initialization
-    }
-});
-const networkInterface = createNetworkInterface({ uri: 'http://localhost:3000/graphql' });
+const networkInterface = createNetworkInterface({ uri: 'http://localhost:3030/graphql' });
 
 networkInterface.use([{
   applyMiddleware(req, next) {
