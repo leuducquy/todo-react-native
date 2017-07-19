@@ -1,7 +1,4 @@
-export const signup = ( email, password) => ({
-  type: 'SIGNUP_REQUESTED',
-  payload: {
-    email,
-    password,
-  }
+export const checkIfSignedIn = ( token) => ({
+  type: 'CHECK_IF_SIGNED_IN',
+  token
 })
