@@ -63,6 +63,8 @@ const todoGraphql = graphql(createTodoMutation, {
          text,
          complete
         },
+      }).then(data =>{
+        console.log(data);
       })
      
     },

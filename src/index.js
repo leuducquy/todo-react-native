@@ -12,13 +12,13 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import store from './store';
 import Router from './routers';
 import gql from 'graphql-tag';
-import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws';
-import {  getToken } from './helper';
+import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
+import { getToken } from './helper';
 
 let TOKEN = "";
 const wsClient = new SubscriptionClient(
-  'ws://localhost:5000/subscriptions', 
-{ reconnect: true, }
+  'ws://localhost:5000/subscriptions',
+  { reconnect: true, }
 );
 const networkInterface = createNetworkInterface(
   { uri: 'http://localhost:3030/graphql' }
@@ -33,26 +33,26 @@ networkInterface.use([{
   },
 }]);
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(
-    networkInterface,
-    wsClient
+  networkInterface,
+  wsClient
 );
 export const client = new ApolloClient({
-  networkInterface : networkInterfaceWithSubscriptions
+  networkInterface: networkInterfaceWithSubscriptions
 });
 
 export default class AppContainer extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidmount(){
-    if(!this.props.token){
-         getToken().then(token =>{
-      TOKEN = token;
-    });
-    }else{
+  componentDidmount() {
+    if (!this.props.token) {
+      getToken().then(token => {
+        TOKEN = token;
+      });
+    } else {
       TOKEN = this.props.token;
     }
-   
+
   }
   render() {
     return (
