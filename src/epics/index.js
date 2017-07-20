@@ -2,33 +2,11 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 import { Observable } from 'rxjs/Observable';
 import { combineEpics } from 'redux-observable';
 import { startSubmit, stopSubmit } from 'redux-form';
-import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-async function saveToken(token) {
-  try {
-    await AsyncStorage.setItem('@rntodo:token', token);
-  } catch (error) {
-    console.log('Error setting item for AsyncStorage');
-    console.log(error);
-  }
-}
-
-export async function getToken() {
- try {
-    const value = await AsyncStorage.getItem('@rntodo:token');
-    if (value !== null){
-      return value;
-    } else {
-      return '';
-    }
-  } catch (error) {
-    console.log(error);
-    return '';
-  } 
-}
+import {getToken, saveToken} from '../helper';
 
 const saveTokenEpic = action$ =>
-  action$.ofType('LOGIN_SUCCEEDED')
+  action$.ofType('LOGIN_SUCCEEDED').do(()=> Actions.home({}))
     .mergeMap(action =>
       fromPromise(saveToken(action.token))
         .map(x => ({
@@ -44,6 +22,7 @@ const checkIfSignedIn = action$ =>
             Actions.login({});
             return { type: 'NOT_SIGNED_IN' };
           } else {
+              Actions.home({});
             return { 
               type: 'ADD_TOKEN_TO_PROPS',
               token

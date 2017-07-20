@@ -57,18 +57,14 @@ gql`mutation ($text : String! ,$complete : Boolean!,$token : String!) {
 const todoGraphql = graphql(createTodoMutation, {
   props: ({ ownProps, mutate }) => ({
     createTodo(text,complete) {
-      console.log(ownProps);
       return mutate({
         variables: {
          token : ownProps.token,
          text,
          complete
-         
         },
       })
-      .then(({ data }) => {
-          console.log(data);
-      });
+     
     },
   }),
 });

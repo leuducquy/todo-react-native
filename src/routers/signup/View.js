@@ -76,6 +76,7 @@ const signGraphql = graphql(sigupMutation, {
         },
       })
       .then(({ data }) => {
+        debugger;
           console.log(data);
       });
     },
