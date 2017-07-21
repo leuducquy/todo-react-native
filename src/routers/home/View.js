@@ -40,6 +40,8 @@ class Home extends Component {
           <ScrollView>
             {this.props.todos.map((item, key) =>
               <TodoItem
+                token={this.props.token}
+                id= {item.id}
                 key={key}
                 text={item.text}
                 complete={item.complete}
