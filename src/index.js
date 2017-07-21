@@ -14,14 +14,14 @@ import Router from './routers';
 import gql from 'graphql-tag';
 import { SubscriptionClient, addGraphQLSubscriptions } from 'subscriptions-transport-ws';
 import { getToken } from './helper';
-
+import {WEBSOCKET_ENDPOINT, GRAPHQL_ENDPOINT} from './Constant';
 let TOKEN = "";
-const wsClient = new SubscriptionClient(
-  'ws://localhost:5000/subscriptions',
+const wsClient = new SubscriptionClient(WEBSOCKET_ENDPOINT
+  ,
   { reconnect: true, }
 );
 const networkInterface = createNetworkInterface(
-  { uri: 'http://localhost:3030/graphql' }
+  { uri:  GRAPHQL_ENDPOINT}
 );
 networkInterface.use([{
   applyMiddleware(req, next) {
