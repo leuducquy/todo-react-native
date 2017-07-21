@@ -4,38 +4,51 @@ import TodoForm from './components/TodoForm';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Actions } from 'react-native-router-flux';
-import { Button, ListItem, List } from "react-native-elements";
-import { FlastList } from 'react-native';
-
+import TodoItem from './components/TodoItem';
+import {
+  Button,
+  ListItem,
+  List,
+  Card,
+  Icon,
+  Grid,
+  Col
+} from "react-native-elements";
+import { FlatList, ScrollView, Text } from 'react-native';
+let setTodoState = false;
 class Home extends Component {
 
   componentDidMount() {
-    console.log(this.props);
     this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
-
+    if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
+      setTodoState = true;
+      nextProps.setTodos(nextProps.viewer.viewer.todos);
+    }
   }
   render() {
+     console.log(this.props.todos);
     return (
       <View>
         <TodoForm {...this.props} />
-        <Button
+        {/* <Button
           title='Go to login'
           onPress={() => Actions.login({})}
-        />
-      {this.props.todos && 
-          <List>
-            {
-              this.props.todos.map((l, i) => (
-                <ListItem
-                  key={i}
-                  title={l.text}
-                />
-              ))
-            }
-          </List>
-      }
+        /> */}
+        {this.props.todos &&
+          <ScrollView>
+            {this.props.todos.map((item, key) =>
+              <TodoItem
+                key={key}
+                text={item.text}
+                complete={item.complete}
+              />
+            )}
+          </ScrollView>
+
+
+        }
       </View>
 
     );
@@ -55,10 +68,13 @@ query($token : String!) {
   viewer(token:$token){
     todos {
       text
+      complete
+      id
     }
   }
 }
 `;
+
 const getViewer = graphql(viewerQuery, {
   name: 'viewer',
   options: ({ token }) => ({
@@ -67,13 +83,13 @@ const getViewer = graphql(viewerQuery, {
     },
   }),
   props: props => {
+
     return {
       viewer: props.viewer,
       subscribeToNewTodos: params => {
         return props.viewer.subscribeToMore({
           document: subscriptionGraphql,
           updateQuery: (prev, { subscriptionData }) => {
-            console.log(subscriptionData);
             props.ownProps.addTodo(subscriptionData.data.todoAdded);
             return prev;
           }

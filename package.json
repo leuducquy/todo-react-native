@@ -10,6 +10,7 @@
 		"es6-promise": "^4.1.1",
 		"graphql-tag": "^2.4.2",
 		"isomorphic-fetch": "^2.2.1",
+		"prop-types": "^15.5.10",
 		"react": "^16.0.0-alpha.12",
 		"react-apollo": "^1.4.3",
 		"react-native": "^0.46.2",
