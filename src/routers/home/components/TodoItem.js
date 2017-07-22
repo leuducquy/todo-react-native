@@ -6,7 +6,7 @@ import {
   Grid,
   Col
 } from "react-native-elements";
-import { gql, graphql } from '../../../Constant';
+import { gql, graphql , compose } from '../../../Constant';
 import { Text } from 'react-native';
 
 class TodoItem extends Component {
@@ -32,7 +32,7 @@ class TodoItem extends Component {
             <Icon
               name='clear'
               color='#f50'
-              onPress={() => this.props.deleteTodo(id,token)} /></Col>
+              onPress={() => this.props.deleteTodo(id, token)} /></Col>
         </Grid>
       </Card>
     );
@@ -42,6 +42,15 @@ const deleteTodoMutation =
   gql`mutation ($id: String!, $token: String!) {
   deleteTodo(id: $id, token: $token) {
    id
+  }
+}`;
+const updateTodoMutation =
+  gql`mutation ($id: String!,$text: String, $complete: String, $token: String!) {
+  updateTodo(id: $id,text : $text , complete : $complete, token: $token) {
+  id
+  text
+  complete
+  ownerId
   }
 }`;
 const deleteTodoGraphql = graphql(deleteTodoMutation, {
@@ -61,4 +70,22 @@ const deleteTodoGraphql = graphql(deleteTodoMutation, {
     },
   }),
 });
-export default deleteTodoGraphql(TodoItem);
+const updateTodoGraphql = graphql(deleteTodoMutation, {
+  props: ({ ownProps, mutate }) => ({
+    updateTodo(id,text,complete, token) {
+      return mutate({
+        variables: {
+          id,
+          text,
+          complete,
+          token,
+        },
+      }).then(data => {
+
+        }).catch(err => {
+          //  ownProps.loginFailed(err);
+        });
+    },
+  }),
+});
+export default compose(deleteTodoGraphql,updateTodoGraphql)(TodoItem);

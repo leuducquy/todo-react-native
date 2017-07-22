@@ -1,5 +1,10 @@
-import { graphql } from 'react-apollo';
+import { graphql , compose} from 'react-apollo';
 import gql from 'graphql-tag';
 export const WEBSOCKET_ENDPOINT = 'ws://localhost:5000/subscriptions';
 export const GRAPHQL_ENDPOINT = 'http://localhost:3030/graphql';
-export {gql ,graphql } ;
+export const CHECK_IF_SIGNED_IN = "CHECK_IF_SIGNED_IN";
+export const SET_TODOS = "SET_TODOS";
+export const ADD_TODO = "ADD_TODO";
+export const DELETE_TODO = "DELETE_TODO";
+export const UPDATE_TODO = "UPDATE_TODO";
+export {gql ,graphql,compose } ;
