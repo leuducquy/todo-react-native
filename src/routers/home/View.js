@@ -28,14 +28,14 @@ class Home extends Component {
     }
   }
   render() {
-     console.log(this.props.todos);
+     console.log(this.props.viewer.error);
     return (
       <View>
         <TodoForm {...this.props} />
-        {/* <Button
+         <Button
           title='Go to login'
           onPress={() => Actions.login({})}
-        /> */}
+        /> 
         {this.props.todos &&
           <ScrollView>
             {this.props.todos.map((item, key) =>
@@ -48,8 +48,6 @@ class Home extends Component {
               />
             )}
           </ScrollView>
-
-
         }
       </View>
 
@@ -58,10 +56,13 @@ class Home extends Component {
 }
 const subscriptionGraphql = gql`
 subscription{
-  todoAdded {
-    id
-    text
-    complete
+  todoChanges {
+    op
+    todo {
+      id
+      text
+      complete
+      }
   }
 }
 `;
@@ -92,7 +93,13 @@ const getViewer = graphql(viewerQuery, {
         return props.viewer.subscribeToMore({
           document: subscriptionGraphql,
           updateQuery: (prev, { subscriptionData }) => {
-            props.ownProps.addTodo(subscriptionData.data.todoAdded);
+            const {op, todo} = subscriptionData.data.todoChanges;
+            if(op === 'created') {
+             props.ownProps.addTodo(todo);
+            }else if(op === 'deleted'){
+                props.ownProps.deleteTodo(todo.id);
+            }
+          
             return prev;
           }
         });
