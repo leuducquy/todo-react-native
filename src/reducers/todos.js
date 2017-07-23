@@ -7,6 +7,7 @@ export default (state=[], action) => {
     case 'DELETE_TODO':
       return state.filter(todo => todo.id !== action.id);
     case 'UPDATE_TODO':
+      console.log(action.todo);
       return state.map((t) => t.id === action.todo.id ? action.todo : t);
     default:
       return state;

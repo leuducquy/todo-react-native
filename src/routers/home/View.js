@@ -17,31 +17,33 @@ import {
 import { FlatList, ScrollView, Text } from 'react-native';
 let setTodoState = false;
 class Home extends Component {
-
+ 
   componentDidMount() {
     this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
       setTodoState = true;
+      console.log('settodos',nextProps);
+
+      
       nextProps.setTodos(nextProps.viewer.viewer.todos);
     }
   }
   render() {
-     console.log(this.props.viewer.error);
     return (
       <View>
         <TodoForm {...this.props} />
-         <Button
+        <Button
           title='Go to login'
           onPress={() => Actions.login({})}
-        /> 
+        />
         {this.props.todos &&
           <ScrollView>
             {this.props.todos.map((item, key) =>
               <TodoItem
                 token={this.props.token}
-                id= {item.id}
+                id={item.id}
                 key={key}
                 text={item.text}
                 complete={item.complete}
@@ -93,13 +95,20 @@ const getViewer = graphql(viewerQuery, {
         return props.viewer.subscribeToMore({
           document: subscriptionGraphql,
           updateQuery: (prev, { subscriptionData }) => {
-            const {op, todo} = subscriptionData.data.todoChanges;
-            if(op === 'created') {
-             props.ownProps.addTodo(todo);
-            }else if(op === 'deleted'){
-                props.ownProps.deleteTodo(todo.id);
+            const { op, todo } = subscriptionData.data.todoChanges;
+            console.log('op--', op);
+            if (op === 'created') {
+              props.ownProps.addTodo(todo);
+            } else if (op === 'deleted') {
+              console.log('delete subctiption');
+              
+              props.ownProps.deleteTodo(todo.id);
             }
-          
+            else if (op === 'updated') {
+             console.log( "subcript update",todo);
+              props.ownProps.updateTodo(todo);
+            }
+
             return prev;
           }
         });

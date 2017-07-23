@@ -17,16 +17,25 @@ class TodoItem extends Component {
   static propTypes = {
     id: PropTypes.string,
     text: PropTypes.string,
-    complete: PropTypes.boolean,
+    complete: PropTypes.bool,
     token: PropTypes.string,
   }
   render() {
     const { text, complete, id, token } = this.props;
+    let textStyle = {};
+    if(complete){
+      textStyle.textDecorationLine ='line-through';
+    }
     return (
       <Card>
         <Grid>
-          <Col size={75}>
-            <Text>{text}</Text>
+          <Col
+           onPress ={() => this.props.updateTodo(id,text,!complete,token)}
+           size={75}>
+            <Text
+            style ={textStyle}
+            >{text}
+            </Text>
           </Col>
           <Col style={{ marginRight: 0 }} size={25}>
             <Icon
@@ -45,12 +54,11 @@ const deleteTodoMutation =
   }
 }`;
 const updateTodoMutation =
-  gql`mutation ($id: String!,$text: String, $complete: String, $token: String!) {
+  gql`mutation ($id: String!,$text: String!, $complete: Boolean!, $token: String!) {
   updateTodo(id: $id,text : $text , complete : $complete, token: $token) {
   id
   text
   complete
-  ownerId
   }
 }`;
 const deleteTodoGraphql = graphql(deleteTodoMutation, {
@@ -70,7 +78,7 @@ const deleteTodoGraphql = graphql(deleteTodoMutation, {
     },
   }),
 });
-const updateTodoGraphql = graphql(deleteTodoMutation, {
+const updateTodoGraphql = graphql(updateTodoMutation, {
   props: ({ ownProps, mutate }) => ({
     updateTodo(id,text,complete, token) {
       return mutate({
@@ -81,9 +89,8 @@ const updateTodoGraphql = graphql(deleteTodoMutation, {
           token,
         },
       }).then(data => {
-
         }).catch(err => {
-          //  ownProps.loginFailed(err);
+            console.log('update error', err);
         });
     },
   }),
