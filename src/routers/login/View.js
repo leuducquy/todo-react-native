@@ -7,36 +7,37 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
 import { FormLabel, FormInput, Button, FormValidationMessage } from 'react-native-elements'
 import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 const textField = ({ input: { onChange, ...otherProps }, meta: { touched, error } }) => (
   <View>
-    <FormInput onChangeText={onChange} {...otherProps} />
+    <FormInput autoCapitalize='none' onChangeText={onChange} {...otherProps} />
     { touched && error &&  <FormValidationMessage>{ error }</FormValidationMessage> }
   </View>
 );
 
-
 const passwordField = ({ input: { onChange, ...otherProps }, meta: { touched, error } }) => (
-  <View>
+  <View style={{ marginBottom: 30 }}>
     <FormInput onChangeText={onChange} {...otherProps} secureTextEntry />
     { touched && error &&  <FormValidationMessage>{ error }</FormValidationMessage> }
   </View>
 );
 
-const submit = ({  email='', password='' }, login) => {
+const submit = ({ email='', password='' }, login) => {
   const errors = {
     _error: 'Login failed!'
   }
 
   let error = false;
+
   if (!email.trim()) {
     errors.email = 'Required'
     error = true;
   }
+  
   if (!password.trim()) {
     errors.password = 'Required'
     error = true;
@@ -45,27 +46,35 @@ const submit = ({  email='', password='' }, login) => {
   if (error) {
     throw new SubmissionError(errors);
   } else {
-   login( email, password);
+    login(email, password);
   }
 }
 
-const loginApp = ({ handleSubmit, login }) => (
- <View style= {{flex : 1 , justifyContent :"center" }}>
+const login = ({ handleSubmit, login }) => (
+ <View>
     <FormLabel>Email</FormLabel>
     <Field name='email' component={textField} />
     <FormLabel>Password</FormLabel>
-    <Field name='password' component={passwordField} />
+    <Field 
+      name='password' 
+      component={passwordField} />
     <Button 
-      title='login'
+      title='Login'
       onPress={handleSubmit(values => submit(values, login))} />
   </View>
 );
-const loginMutation = 
-gql`mutation ($email: String!, $password: String!) {
+
+const loginMutation = gql`
+mutation ($email: String!, $password: String!) {
   login(email: $email, password: $password) {
-   token
+    token
+    data {
+      email
+    }
   }
-}`;
+}
+`
+
 const loginGraphql = graphql(loginMutation, {
   props: ({ ownProps, mutate }) => ({
     login(email, password) {
@@ -75,15 +84,17 @@ const loginGraphql = graphql(loginMutation, {
           password,
         },
       })
-      .then( data  => {
-          ownProps.loginSucceeded(data.data.login.token);
-          // ownProps.addTokenToProps(data.data.login.token);
-      }).catch(err =>{
-         ownProps.loginFailed(err);
+      .then(data => {
+        ownProps.loginSucceeded(data.data.login.token);
+        ownProps.addTokenToProps(data.data.login.token);
+      })
+      .catch(err => {
+        ownProps.loginFailed(err);
       });
     },
   }),
 });
+
 export default reduxForm({
-  form: 'loginApp',
-})(loginGraphql(loginApp));
+  form: 'login',
+})(loginGraphql(login));

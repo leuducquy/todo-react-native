@@ -13,6 +13,14 @@ const saveTokenEpic = action$ =>
           type: 'SET_ITEM_SUCCEEDED',
         }))
     );
+const logoutEpic = action$ =>
+  action$.ofType('LOG_OUT').do(()=> Actions.login({}))
+    .mergeMap(action =>
+      fromPromise(saveToken(''))
+        .map(x => ({
+          type: 'TOKE_CLEARED',
+        }))
+    );
 const checkIfSignedIn = action$ =>
   action$.ofType('CHECK_IF_SIGNED_IN')
     .mergeMap(action =>
@@ -32,5 +40,6 @@ const checkIfSignedIn = action$ =>
     );
 export default combineEpics(
   saveTokenEpic,
-  checkIfSignedIn
+  checkIfSignedIn,
+  logoutEpic
 );

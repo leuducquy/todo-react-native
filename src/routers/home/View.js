@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Actions } from 'react-native-router-flux';
 import TodoItem from './components/TodoItem';
+import App from '../../'
 import {
   Button,
   ListItem,
@@ -12,21 +13,21 @@ import {
   Card,
   Icon,
   Grid,
-  Col
+  Col,
+  SideMenu
 } from "react-native-elements";
 import { FlatList, ScrollView, Text } from 'react-native';
 let setTodoState = false;
 class Home extends Component {
- 
+
+  
   componentDidMount() {
     this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
       setTodoState = true;
-      console.log('settodos',nextProps);
-
-      
+      console.log('settodos', nextProps);
       nextProps.setTodos(nextProps.viewer.viewer.todos);
     }
   }
@@ -101,11 +102,11 @@ const getViewer = graphql(viewerQuery, {
               props.ownProps.addTodo(todo);
             } else if (op === 'deleted') {
               console.log('delete subctiption');
-              
+
               props.ownProps.deleteTodo(todo.id);
             }
             else if (op === 'updated') {
-             console.log( "subcript update",todo);
+              console.log("subcript update", todo);
               props.ownProps.updateTodo(todo);
             }
 
