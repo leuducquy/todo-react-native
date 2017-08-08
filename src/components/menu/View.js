@@ -25,7 +25,9 @@ export default class Menu extends Component {
           }
           title = 'Logout'
           onPress = {
-            () => this.props.logout()
+            () => { 
+              this.props.logout();
+               }
           }
           />
         </List>
