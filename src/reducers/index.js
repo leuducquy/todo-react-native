@@ -5,4 +5,5 @@ import {reducer as formReducer} from 'redux-form'; // ES6
 import login from "./login";
 import token from "./token";
 import todos from "./todos";
-export const rootReducer = combineReducers({form: formReducer, login, token, todos});
+import isOpen from "./sidemenu";
+export const rootReducer = combineReducers({form: formReducer, login, token, todos,isOpen});

@@ -6,8 +6,6 @@ import {Actions} from 'react-native-router-flux';
 export default class Menu extends Component {
 
   render() {
-    console.log('this.props',this.props
-    );
     
     return (
       <View

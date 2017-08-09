@@ -8,46 +8,37 @@ import Home from "./home";
 import Loading from "./Loading";
 import Menu from "../components/menu";
 import { SideMenu, List, ListItem } from "react-native-elements";
-import NavBar from '../components/NavBar';
+import NavBar from '../components/navBar';
 import * as actionCreators from './actions';
 export default class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      isOpen: false
-    }
-   
+
+
   }
   static propTypes = {
-    onChange: PropTypes.func
+    isOpen : PropTypes.bool
   }
+  
   componentWillReceiveProps = (nextProps) => {
-    console.log('next props',nextProps);
-    
   }
-  
-  toggleSideMenu = () => {
-    console.log('this state open',this.state.isOpen);
-    
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
+  componentWillMount = () => {
   }
-  
   render() {
+    const { isOpen } = this.props;
+    console.log('props router', isOpen);
 
     return (
       <SideMenu
-        ref={(sidemenu) => { this.sidemenu = sidemenu; }}
         openMenuOffset
         ={Dimensions
           .get('window')
           .width * (3 / 4)}
-        isOpen={this.state.isOpen}
-       
+        isOpen={isOpen}
+
         menu={<Menu />}>
-        <NavBar toggleSideMenu={this.toggleSideMenu} />
+        <NavBar  />
         <Router>
           <Scene key="root">
             <Scene

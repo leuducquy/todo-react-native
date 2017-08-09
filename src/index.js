@@ -10,7 +10,6 @@ import gql from 'graphql-tag';
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws';
 import {getToken} from './helper';
 import {WEBSOCKET_ENDPOINT, GRAPHQL_ENDPOINT} from './Constant';
-import NavBar from './components/NavBar';
 let TOKEN = "";
 const wsClient = new SubscriptionClient(WEBSOCKET_ENDPOINT, {reconnect: true});
 const networkInterface = createNetworkInterface({uri: GRAPHQL_ENDPOINT});
@@ -49,7 +48,6 @@ export default class AppContainer extends React.Component {
           flex: 1
         }}>
           <StatusBar/>
-          <NavBar />
           <Router/>
         </View>
       </ApolloProvider>
