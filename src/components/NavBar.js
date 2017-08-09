@@ -2,9 +2,9 @@ import {Dimensions, View, Text, StyleSheet} from 'react-native';
 import React, {Component} from 'react';
 import {Icon} from 'react-native-elements';
 
-export default(props) => (
+export default({toggleSideMenu}) => (
   <View style={styles.container}>
-    <Icon style={styles.icon} name='menu'/>
+    <Icon onPress={() => toggleSideMenu()} style={styles.icon} name='menu'/>
     <Text style={styles.title}>MyTodos
     </Text>
   </View>
