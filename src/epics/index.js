@@ -14,7 +14,7 @@ const saveTokenEpic = action$ =>
         }))
     );
 const logoutEpic = action$ =>
-  action$.ofType('LOG_OUT').do(()=> Actions.login({}))
+  action$.ofType('LOG_OUT')
     .mergeMap(action =>
       fromPromise(saveToken(''))
         .map(x => ({
@@ -23,7 +23,7 @@ const logoutEpic = action$ =>
     );
 const checkIfSignedIn = action$ =>
   action$.ofType('CHECK_IF_SIGNED_IN')
-    .mergeMap(action =>
+    .mergeMap(action => 
       fromPromise(getToken())
         .map(token => {
           if (token === '' || token === undefined) {

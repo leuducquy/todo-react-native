@@ -20,14 +20,17 @@ import { FlatList, ScrollView, Text } from 'react-native';
 let setTodoState = false;
 class Home extends Component {
 
-  
+
   componentDidMount() {
-    this.props.subscribeToNewTodos();
+   // this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
-      setTodoState = true;
-      nextProps.setTodos(nextProps.viewer.viewer.todos);
+      // setTodoState = true;
+      // nextProps.setTodos(nextProps.viewer.viewer.todos);
+      // this.props.setUser({
+      //   email: nextProps.viewer.viewer.email
+      // } );
     }
   }
   render() {
@@ -71,11 +74,14 @@ subscription{
 const viewerQuery = gql`
 query($token : String!) {
   viewer(token:$token){
+    email
+   todoList{
     todos {
       text
       complete
       id
     }
+  }
   }
 }
 `;

@@ -18,3 +18,7 @@ export const updateTodo = (todo) => ({
   type: UPDATE_TODO,
   todo
 });
+export const setUser = (user) => ({
+  type: 'SET_USER',
+  user,
+})

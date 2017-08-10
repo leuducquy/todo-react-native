@@ -49,8 +49,8 @@ const TodoForm  = ({handleSubmit , createTodo}) => {
 }
 
 const createTodoMutation = 
-gql`mutation ($text : String! ,$complete : Boolean!,$token : String!) {
-  createTodo(text : $text , complete :$complete,token: $token) {
+  gql`mutation ($listId : String! , $text : String! ,$complete : Boolean!,$token : String!) {
+  createTodo(listId : $listId ,text : $text , complete :$complete,token: $token) {
     id
   }
 }`;

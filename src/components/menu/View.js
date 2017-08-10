@@ -3,15 +3,10 @@ import PropTypes from 'prop-types';
 import { View,Text } from 'react-native';
 import { Button, ListItem, List } from "react-native-elements";
 import { Actions } from 'react-native-router-flux';
+import TodoListForm from './components/todoListForm';
 export default class Menu extends Component {
 
   render() {
-    console.log('props menu',this.props);
-    
-   let email  = '';
-   if(this.props.user && this.props.user.email){
-    email  = this.props.user.email;
-   }
     return (
       <View
         style={{
@@ -24,7 +19,7 @@ export default class Menu extends Component {
         }}>
           <ListItem
             key={-2}
-            title={<Text>{email}</Text>}
+            title={<Text>{this.props.user.email || ''}</Text>}
            />
           <ListItem
           key = {
@@ -34,9 +29,22 @@ export default class Menu extends Component {
           onPress = {
             () => {
               this.props.logout();
+              Actions.login();
             }
           }
           />
+          <ListItem
+          key = {
+            -4
+          }
+          title = 'Sign up'
+          onPress = {
+            () => {
+              Actions.signup({});
+            }
+          }
+          />
+          <TodoListForm />
         </List>
       </View>
     );
