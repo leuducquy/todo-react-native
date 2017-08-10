@@ -13,3 +13,7 @@ export const addTokenToProps = (token) => ({
   type: 'ADD_TOKEN_TO_PROPS',
   token,
 })
+export const setUser = (user) => ({
+  type: 'SET_USER',
+  user,
+})

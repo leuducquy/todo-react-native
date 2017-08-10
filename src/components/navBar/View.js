@@ -7,16 +7,11 @@ export default class NavBar extends Component {
   static propTypes = {
     toggleSideMenu : PropTypes.func
   }
- componentWillReceiveProps = (nextProps) => {
-   console.log('navbar will recever', nextProps);
-   
- }
+ 
  
   render() {
-    console.log('props nav bar',this.props);
-    
     return (<View style={styles.container}>
-      <Icon onPress={() => this.props.toggleSideMenu(!this.props.isOpen)} style={styles.icon} name='menu' />
+      <Icon onPress={() => this.props.toggleSideMenu()} style={styles.icon} name='menu' />
       <Text style={styles.title}>MyTodos
     </Text>
     </View>)

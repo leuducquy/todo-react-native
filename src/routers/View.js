@@ -14,20 +14,16 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
-
-
+    this.state = {
+      isOpen: false
+    }
   }
-  static propTypes = {
-    isOpen : PropTypes.bool
-  }
-  
-  componentWillReceiveProps = (nextProps) => {
-  }
-  componentWillMount = () => {
+  onSideMenuChange=(isOpen) => {
+    this.setState({
+      isOpen: isOpen
+    })
   }
   render() {
-    const { isOpen } = this.props;
-    console.log('props router', isOpen);
 
     return (
       <SideMenu
@@ -35,10 +31,14 @@ export default class App extends Component {
         ={Dimensions
           .get('window')
           .width * (3 / 4)}
-        isOpen={isOpen}
-
+        isOpen={this.state.isOpen}
+        onChange={() => this.onSideMenuChange}
         menu={<Menu />}>
-        <NavBar  />
+        <NavBar toggleSideMenu={() => {
+          this.setState({
+            isOpen: !this.state.isOpen
+          })
+        }} />
         <Router>
           <Scene key="root">
             <Scene

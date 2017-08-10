@@ -4,7 +4,8 @@ import View from './View';
 import * as actionCreators from './actions';
 
 const mapStateToProps = (state, ownProps) =>({
-    logout : state.logout
+    logout : state.logout,
+    user : state.user
 });
 
  const mapDispatchToProps = dispatch =>  bindActionCreators(actionCreators,

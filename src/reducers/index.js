@@ -6,4 +6,5 @@ import login from "./login";
 import token from "./token";
 import todos from "./todos";
 import isOpen from "./sidemenu";
-export const rootReducer = combineReducers({form: formReducer, login, token, todos,isOpen});
+import user from "./user";
+export const rootReducer = combineReducers({form: formReducer, login, token, user,todos,isOpen});

@@ -10,4 +10,4 @@ const mapStateToProps = (state, ownProps) =>({
  const mapDispatchToProps = dispatch =>  bindActionCreators(actionCreators,
  dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(View);
+export default View;

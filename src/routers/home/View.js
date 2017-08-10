@@ -27,7 +27,6 @@ class Home extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
       setTodoState = true;
-      console.log('settodos', nextProps);
       nextProps.setTodos(nextProps.viewer.viewer.todos);
     }
   }
