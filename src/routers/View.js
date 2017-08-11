@@ -19,9 +19,11 @@ export default class App extends Component {
     }
   }
   onSideMenuChange=(isOpen) => {
-    this.setState({
-      isOpen: isOpen
-    })
+    console.log('menu change');
+    
+    // this.setState({
+    //   isOpen: isOpen
+    // })
   }
   render() {
 
@@ -32,7 +34,7 @@ export default class App extends Component {
           .get('window')
           .width * (3 / 4)}
         isOpen={this.state.isOpen}
-        onChange={() => this.onSideMenuChange}
+       
         menu={<Menu />}>
         <NavBar toggleSideMenu={() => {
           this.setState({

@@ -7,4 +7,5 @@ import token from "./token";
 import todos from "./todos";
 import isOpen from "./sidemenu";
 import user from "./user";
-export const rootReducer = combineReducers({form: formReducer, login, token, user,todos,isOpen});
+import todoList from "./todoList";
+export const rootReducer = combineReducers({form: formReducer, login, token, user,todos,isOpen,todoList});

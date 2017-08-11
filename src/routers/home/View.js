@@ -17,20 +17,23 @@ import {
   SideMenu
 } from "react-native-elements";
 import { FlatList, ScrollView, Text } from 'react-native';
-let setTodoState = false;
+let setTodoList = false;
 class Home extends Component {
 
 
   componentDidMount() {
-   // this.props.subscribeToNewTodos();
+    this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.viewer.viewer && nextProps.viewer.viewer.todos && !setTodoState) {
-      // setTodoState = true;
-      // nextProps.setTodos(nextProps.viewer.viewer.todos);
-      // this.props.setUser({
-      //   email: nextProps.viewer.viewer.email
-      // } );
+     console.log('will rece,',nextProps);
+    if (nextProps.viewer.viewer && nextProps.viewer.viewer.todoList && !setTodoList) {
+     
+      
+      setTodoList = true;
+      this.props.setTodoList(nextProps.viewer.viewer.todoList);
+      this.props.setUser({
+        email: nextProps.viewer.viewer.email
+      } );
     }
   }
   render() {
@@ -76,6 +79,7 @@ query($token : String!) {
   viewer(token:$token){
     email
    todoList{
+     name
     todos {
       text
       complete
@@ -94,7 +98,6 @@ const getViewer = graphql(viewerQuery, {
     },
   }),
   props: props => {
-
     return {
       viewer: props.viewer,
       subscribeToNewTodos: params => {

@@ -21,4 +21,8 @@ export const updateTodo = (todo) => ({
 export const setUser = (user) => ({
   type: 'SET_USER',
   user,
-})
+});
+export const setTodoList = (todoList) => ({
+  type: 'SET_TODO_LIST',
+  todoList,
+});

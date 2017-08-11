@@ -14,7 +14,7 @@ import { Field, reduxForm, SubmissionError } from 'redux-form';
 
 const textField = ({ input: { onChange, ...otherProps }, meta: { touched, error } }) => (
   <View>
-    <FormInput onChangeText={onChange} {...otherProps} />
+    <FormInput autoCapitalize='none' onChangeText={onChange} {...otherProps} />
     { touched && error &&  <FormValidationMessage>{ error }</FormValidationMessage> }
   </View>
 );
@@ -22,7 +22,7 @@ const textField = ({ input: { onChange, ...otherProps }, meta: { touched, error 
 
 const passwordField = ({ input: { onChange, ...otherProps }, meta: { touched, error } }) => (
   <View>
-    <FormInput onChangeText={onChange} {...otherProps} secureTextEntry />
+    <FormInput autoCapitalize='none' onChangeText={onChange} {...otherProps} secureTextEntry />
     { touched && error &&  <FormValidationMessage>{ error }</FormValidationMessage> }
   </View>
 );
@@ -76,7 +76,8 @@ const signGraphql = graphql(sigupMutation, {
         },
       })
       .then(({ data }) => {
-        debugger;
+        console.log('sign  up', ownProps);
+        
           console.log(data);
       });
     },

@@ -18,14 +18,15 @@ const textField = ({ input: { onChange, ...otherProps }, meta: { touched, error 
         {touched && error && <FormValidationMessage>{error}</FormValidationMessage>}
     </View>
 );
-const submit = ({ name = '' }, createTodoList) => {
+const submit = ({name = ''}, createTodoList) => {
+     console.log('nae',name);
     const errors = {
         _error: 'Emty todo!'
     }
 
     let error = false;
     if (!name.trim()) {
-        errors.email = 'Required'
+        errors.name = 'Required'
         error = true;
     }
 
@@ -33,14 +34,16 @@ const submit = ({ name = '' }, createTodoList) => {
     if (error) {
         throw new SubmissionError(errors);
     } else {
-        createTodoList(name, false);
+        createTodoList(name);
     }
 }
 const TodoListForm = ({ handleSubmit, createTodoList }) => {
+  
+    
     return (
         <View>
             <FormLabel>add TodoList</FormLabel>
-            <Field name='text' component={textField} />
+            <Field name='name' component={textField} />
             <Button
                 title='Create'
                 onPress={handleSubmit(values => submit(values, createTodoList))} />
@@ -48,15 +51,15 @@ const TodoListForm = ({ handleSubmit, createTodoList }) => {
     );
 }
 
-const createTodoMutation =
+const createTodoListMutation =
 gql`mutation ($name: String!,$token : String!) {
   createTodoList(name : $name ,token: $token) {
     name
   }
 }`;
-const todoListGraphql = graphql(createTodoMutation, {
+const todoListGraphql = graphql(createTodoListMutation, {
     props: ({ ownProps, mutate }) => ({
-        createTodo(text, complete) {
+        createTodoList(name) {
             return mutate({
                 variables: {
                     token: ownProps.token,

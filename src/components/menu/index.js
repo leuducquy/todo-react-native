@@ -5,7 +5,8 @@ import * as actionCreators from './actions';
 
 const mapStateToProps = (state, ownProps) =>({
     logout : state.logout,
-    user : state.user
+    user : state.user,
+    todoList: state.todoList
 });
 
  const mapDispatchToProps = dispatch =>  bindActionCreators(actionCreators,
