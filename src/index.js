@@ -7,8 +7,9 @@ import ApolloClient, {createNetworkInterface} from 'apollo-client';
 import store from './store';
 import Router from './routers';
 import gql from 'graphql-tag';
+import { Actions } from 'react-native-router-flux';
 import {SubscriptionClient, addGraphQLSubscriptions} from 'subscriptions-transport-ws';
-import {getToken} from './helper';
+import {getToken,saveToken} from './helper';
 import {WEBSOCKET_ENDPOINT, GRAPHQL_ENDPOINT} from './Constant';
 let TOKEN = "";
 const wsClient = new SubscriptionClient(WEBSOCKET_ENDPOINT, {reconnect: true});
@@ -19,11 +20,23 @@ networkInterface.use([
       if (!req.options.headers) {
         req.options.headers = {}; // Create the header object if needed.
       }
+      
       req.options.headers.authorization = TOKEN;
       next();
     }
   }
 ]);
+networkInterface.useAfter([{
+  applyAfterware({ response }, next) {
+    
+    if (response.status === 401) {
+      saveToken('');
+      Actions.login();
+      
+    }
+    next();
+  }
+}]);
 const networkInterfaceWithSubscriptions = addGraphQLSubscriptions(networkInterface, wsClient);
 export const client = new ApolloClient({networkInterface: networkInterfaceWithSubscriptions});
 

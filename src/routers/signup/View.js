@@ -76,9 +76,8 @@ const signGraphql = graphql(sigupMutation, {
         },
       })
       .then(({ data }) => {
-        console.log('sign  up', ownProps);
         
-          console.log(data);
+       
       });
     },
   }),

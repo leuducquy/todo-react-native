@@ -22,6 +22,10 @@ export const setUser = (user) => ({
   type: 'SET_USER',
   user,
 });
+export const addTodoList = (todoList) => ({
+  type: ADD_TODO_LIST,
+  todoList
+});
 export const setTodoList = (todoList) => ({
   type: 'SET_TODO_LIST',
   todoList,

@@ -19,11 +19,6 @@ export default class App extends Component {
     }
   }
   onSideMenuChange=(isOpen) => {
-    console.log('menu change');
-    
-    // this.setState({
-    //   isOpen: isOpen
-    // })
   }
   render() {
 

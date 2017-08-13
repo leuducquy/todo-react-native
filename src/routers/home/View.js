@@ -25,7 +25,6 @@ class Home extends Component {
     this.props.subscribeToNewTodos();
   }
   componentWillReceiveProps(nextProps) {
-     console.log('will rece,',nextProps);
     if (nextProps.viewer.viewer && nextProps.viewer.viewer.todoList && !setTodoList) {
      
       
@@ -64,12 +63,15 @@ class Home extends Component {
 }
 const subscriptionGraphql = gql`
 subscription{
-  todoChanges {
+  todoListChanges {
     op
-    todo {
-      id
-      text
-      complete
+    todoList {
+      name
+      todos {
+        id 
+        text
+        complete
+      }
       }
   }
 }
@@ -104,10 +106,9 @@ const getViewer = graphql(viewerQuery, {
         return props.viewer.subscribeToMore({
           document: subscriptionGraphql,
           updateQuery: (prev, { subscriptionData }) => {
-            const { op, todo } = subscriptionData.data.todoChanges;
-            console.log('op--', op);
-            if (op === 'created') {
-              props.ownProps.addTodo(todo);
+            const { op, todoList } = subscriptionData.data.todoListChanges;
+             if (op === 'created') {
+              props.ownProps.addTodoList(todoList);
             } else if (op === 'deleted') {
               console.log('delete subctiption');
 
@@ -117,6 +118,17 @@ const getViewer = graphql(viewerQuery, {
               console.log("subcript update", todo);
               props.ownProps.updateTodo(todo);
             }
+            // if (op === 'created') {
+            //   props.ownProps.addTodo(todo);
+            // } else if (op === 'deleted') {
+            //   console.log('delete subctiption');
+
+            //   props.ownProps.deleteTodo(todo.id);
+            // }
+            // else if (op === 'updated') {
+            //   console.log("subcript update", todo);
+            //   props.ownProps.updateTodo(todo);
+            // }
 
             return prev;
           }

@@ -6,7 +6,6 @@ import { Actions } from 'react-native-router-flux';
 import TodoListForm from './components/todoListForm';
 export default class Menu extends Component {
   componentWillReceiveProps = (nextProps) => {
-    console.log('will re');
     
   }
   

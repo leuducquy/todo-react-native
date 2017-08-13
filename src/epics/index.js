@@ -26,6 +26,7 @@ const checkIfSignedIn = action$ =>
     .mergeMap(action => 
       fromPromise(getToken())
         .map(token => {
+          
           if (token === '' || token === undefined) {
             Actions.login({});
             return { type: 'NOT_SIGNED_IN' };

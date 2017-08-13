@@ -19,7 +19,6 @@ const textField = ({ input: { onChange, ...otherProps }, meta: { touched, error 
     </View>
 );
 const submit = ({name = ''}, createTodoList) => {
-     console.log('nae',name);
     const errors = {
         _error: 'Emty todo!'
     }
